@@ -2,16 +2,15 @@
   "action_fingerprints": {
     "action_listen": {
       "slots": [
-        "budget",
         "email",
+        "budget",
         "location",
         "cuisine"
       ]
     },
-    "action_validate_cuisine": {
+    "action_validate_budget": {
       "slots": [
-        "budget",
-        "cuisine"
+        "budget"
       ]
     },
     "action_validate_location": {
@@ -20,9 +19,10 @@
         "location"
       ]
     },
-    "action_validate_budget": {
+    "action_validate_cuisine": {
       "slots": [
-        "budget"
+        "budget",
+        "cuisine"
       ]
     },
     "action_validate_email": {

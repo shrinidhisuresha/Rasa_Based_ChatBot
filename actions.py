@@ -17,7 +17,7 @@ class ActionSearchRestaurants(Action):
 		return 'action_restaurant'
 		
 	def run(self, dispatcher, tracker, domain):
-		config={ "user_key":"0fffffff9c"}#type your zomato API key here
+		config={ "user_key":"3839c0b654d4827534197eda53907ca2"}#type your zomato API key here
 		zomato = zomatopy.initialize_app(config)
 		loc = tracker.get_slot('location')
 		cuisine = tracker.get_slot('cuisine')
@@ -76,7 +76,7 @@ class ActionSearchRestaurantsOld(Action):
 		return 'action_restaurant'
 		
 	def run(self, dispatcher, tracker, domain):
-		config={ "user_key":"6ce88a5ec1419e335afa1c7f92f4b739"}
+		config={ "user_key":"3839c0b654d4827534197eda53907ca2"}
 		zomato = zomatopy.initialize_app(config)
 		loc = tracker.get_slot('location')
 		cuisine = tracker.get_slot('cuisine')
@@ -175,7 +175,7 @@ class ActionSendEmail(Action):
 		return 'action_email'		
     		
 	def run(self, dispatcher, tracker, domain):
-		config={"user_key":"ssasasasas"}#type your zomato API key here
+		config={"user_key":"3839c0b654d4827534197eda53907ca2"}#type your zomato API key here
 		zomato = zomatopy.initialize_app(config)
 		loc = tracker.get_slot('location')
 		cuisine = tracker.get_slot('cuisine')
@@ -194,7 +194,7 @@ class ActionSendEmail(Action):
 		cols = ['restaurant name', 'restaurant address', 'avg. budget for two', 'zomato rating']
 		resrnt_df = pd.DataFrame(columns = cols)	
 		location_detail=zomato.get_location(loc, 1)
-		#print(location_detail)
+		print(location_detail)
 		d1 = json.loads(location_detail)
 		lat=d1["location_suggestions"][0]["latitude"]
 		lon=d1["location_suggestions"][0]["longitude"]

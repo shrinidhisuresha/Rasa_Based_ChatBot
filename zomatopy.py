@@ -1,5 +1,7 @@
 import requests
 import ast
+import json
+import glob
 
 base_url = "https://developers.zomato.com/api/v2.1/"
 
@@ -216,7 +218,7 @@ class Zomato:
         return restaurant_details
 
 
-    def restaurant_search(self, query="", latitude="", longitude="", cuisines="", limit=5):
+    def restaurant_search(self, query="", latitude="", longitude="", cuisines="",sort="",order="",limit=10):
         """
         Takes either query, latitude and longitude or cuisine as input.
         Returns a list of Restaurant IDs.
@@ -225,20 +227,11 @@ class Zomato:
         if str(limit).isalpha() == True:
             raise ValueError('LimitNotInteger')
         headers = {'Accept': 'application/json', 'user-key': self.user_key}
-        r = (requests.get(base_url + "search?q=" + str(query) + "&count=" + str(limit) + "&lat=" + str(latitude) + "&lon=" + str(longitude) + "&cuisines=" + str(cuisines), headers=headers).content).decode("utf-8")
-        return r#a = ast.literal_eval(r)
-
-
-    def get_location(self, query="", limit=5):
-        """
-        Takes either query, latitude and longitude or cuisine as input.
-        Returns a list of Restaurant IDs.
-        """
-        if str(limit).isalpha() == True:
-            raise ValueError('LimitNotInteger')
-        headers = {'Accept': 'application/json', 'user-key': self.user_key}
-        r = (requests.get(base_url + "locations?query=" + str(query) + "&count=" + str(limit), headers=headers).content).decode("utf-8")
-        return r
+        result = [[] for i in range(5)]
+        for i, start in zip(range(0,5, 1), range(0, 100, 20)):
+            r = (requests.get(base_url + "search?q=" + str(query)+ "&start="+str(start) + "&count=20" + "&lat=" + str(latitude) + "&lon=" + str(longitude) + "&cuisines=" + str(cuisines)+"&sort="+str(sort)+"&order="+str(order), headers=headers).content).decode("utf-8")		
+            result[i] = r
+        return  result#retun list of 5 strings in json format
 
     def restaurant_search_by_keyword(self, query="", cuisines="", limit=5):
         """
@@ -252,6 +245,16 @@ class Zomato:
         r = (requests.get(base_url + "search?q=" + str(query) + "&count=" + str(limit) + "&cuisines=" + str(cuisines), headers=headers).content).decode("utf-8")
         return r
 
+    def get_location(self, query="", limit=5):
+        """
+        Takes either query, latitude and longitude or cuisine as input.
+        Returns a list of Restaurant IDs.
+        """
+        if str(limit).isalpha() == True:
+            raise ValueError('LimitNotInteger')
+        headers = {'Accept': 'application/json', 'user-key': self.user_key}
+        r = (requests.get(base_url + "locations?query=" + str(query) + "&count=" + str(limit), headers=headers).content).decode("utf-8")
+        return r
 
 
 
